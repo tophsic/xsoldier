@@ -1,0 +1,305 @@
+2011-08-13  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.8
+	* score.c: compare_entry() is now static
+	* configure.ac: added x before with/enable variables in case
+	  their values begin with a special character
+	* player.c: removed the "not shooting" bonus debug message
+	  because it is too noisy
+	* boss.c: removed debug messages in BossHit1 because they are
+	  too noisy
+
+2011-08-10  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.7
+	* joystick.c, joystick.h: define empty functions instead of
+	  commenting them out when the joystick support is disabled
+	  to avoid an empty .c file
+	* enemyshot.c: included stdio.h and stdlib.h (for abs())
+	* Makefile.am: removed -Wcast-qual because the file name for
+	  XpmReadFileToPixmap is char *, not const char *
+
+2011-08-09  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.6
+	* configure.ac: fixed so that --enable options can be disabled
+	  correctly
+	* configure.ac: rewrite --with option
+	* configure.ac: added AC_PROG_CPP because AC_CHECK_HEADERS requires it
+	* configure.ac: checks the function atexit because graphic.c uses it
+	* configure.ac: fixed comments
+	* joystick.c, joystick.h: comment out the whole file if JSTK is
+	  not defined
+	* Makefile.am: fixed comment so that Makefile doesn't say "process
+	  this file with automake"
+	* Makefile.am, configure.ac: use the tar-ustar option of automake
+	  instead of AMTAR = ustar in Makefile.am
+	* configure.ac: added the foreign option to AM_INIT_AUTOMAKE
+	* README: says that the joystick support is only on Linux
+
+2009-11-08  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.5
+	* game.c, xsoldier.h: make sure that an object never acts at the same
+	  frame as it is created
+	* game.c: removed unnecessary variable ocheck
+	* version.h: updated UPDATE
+
+2006-09-16  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.4
+	* Makefile.am: minor cleanup
+	  - uses some AM_variables
+	  - gcc -g and the overkill warnings are now default
+	  - set AMTAR to ustar
+	* Makefile.in: regenerated with automake 1.9
+	* configure: ./configure accepts --without-sld as well as --with-sdl
+	* INSTALL: fixed high score file instruction
+	* input.c, main.c, manage.c, xsolder.h: the SDL version respects
+	  the TERM signal and closing the window
+
+2002-05-26  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.3
+	* configure.ac:  does not stop configuring even if --with-sdl is
+	  specified but AC_CHECK_LIB([SDL], [SDL_Init]) fails (this won't do
+	  any harm because if there is no SDL then "make" will fail correctly)
+	  (I don't know why AC_CHECK_LIB fails on a non-i386 architecture
+	  (perhaps because of missing -lpthread?))
+	* configure.ac: regenerated
+	* image.c, manage.c: s/HAVE_LIBSDL_IMAGE/HAVE_LIBSDL/g
+	* common.c, ending.c, enemyshot.c, game.c, joystick.c, opening.c:
+	  added some #include to avoid gcc -Wall warnings
+	* enemyshot.c, graphic.c, manage.c, player.c: use division instead
+	  of shift
+	* score.c: fake records no longer have loop 0
+	* score.c: fake records are more close to the default
+	* image.c: fixed image loading so that xsoldier displays the correct
+	  color on a 16-bit-per-pixel display (thanks to Stephen McCamant
+	  <smcc@CSUA.Berkeley.EDU> for the patch)
+	* README: fixed typo
+	* image.c: SDL version sets the palette of pixmaps explicitly if
+	  the screen is 8 bpp (without this the window is blank)
+	* README, extern.h, graphic.c, image.c, main.c, xsoldier.6: now
+	  -c option does nothing because it does not work with raw X on
+	  8 bpp screen
+	* image.h: SDL version uses typedef instead of #define for Image
+	* graphic.c, image.c, star.c: fixed memory leak (I still don't know
+	  how to free memory allocated by getpwuid() in manage.c)
+	* README: fixed description (xsoldier is not first-person, "for one
+	  player" is the right term)
+	* boss.c: you can't go to the next stage if the game is over
+
+2002-04-24  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.2
+	* xsoldier is ported to SDL (the Simple DirectMedia Layer library)
+	* extern.h: fixed a typo in comment
+	* callback.c, game.c, graphic.c, image.c, input.c, joystick.c,
+	  main.c, manage.c, config.h, extern.h, graphic.h, image.h, key.h:
+	  Added libsdl support (use --with-sdl).  Note that libsdl support
+	  uses a double-standard for coordinates to keep the 10 pixel
+	  boundary
+	* enemyshot.c: enemy shots do move
+	* INSTALL, README: added note on SDL
+	* README: added a game tip
+
+2002-04-21  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.1
+	* now xsolider comes with its own font
+	* graphic.c: no longer use the X font (this is necessary for porting
+	  to SDL)
+	* pixmap/font*.xpm: new files, provide the font
+	* boss.c, enemy.c: enemies appear more gracefully
+	* game.c: fixed counter of the number of normal enemies
+	* Makefile.am: "make install" does not overwrite the high score file
+	* INSTALL: added more info on the high score file
+	
+2002-04-21  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 1.0
+	* now I am the official developer of xsoldier (I got a mail from
+	  the original of xsoldier, Yuusuke HASHIMOTO <hachi@pm.highway.ne.jp>)
+	* player.c: weapon 1 shoots more and damages less
+	* game.c: set boss time to 2000 instead of 3000 if not in final stage
+	* boss.c: teleportation of boss 6 takes less time
+	* enemy.c: power-up items move faster
+	* boss.c: boss has a fixed (independent of loop) hit point
+	* game.c, player.c, player.h: you lose some of power-up items
+	  when you are killed
+	* boss.c: reduced the amount of ring shots of the last boss
+	* boss.c: the last boss shoots a 5way shot in loop 1
+	* enemy.c: enemy 6 may give you an item
+	* player.c: set immutable time to 60 instead of 50 when
+	  starting/restarting
+	* xsoldier.h: changed the argument of the srand() macro from s to x
+	  because the word "srand" contains the letter "s"
+	* boss.c: homing shot of the last boss is faster
+	* boss.c, enemy.c, enemyshot.c: fixed window edge detection
+	* boss.c: fixed homing shot of boss 2
+	* main.c: you can enter the high score list even if you use the
+	  -wait option as long as the wait is not greater than default
+	* game.c: normal enemies appear more frequently
+	* main.c: made sig_handle() static
+	* common.c, common.h, extern.h: translated all comments into English
+	* graphic.c, graphic.h, input.c, input.h: new files, putting all
+	  X related stuff here
+	* ending.c, game.c, opening.c: no more X stuff
+	* boss.c: boss 2 can shoot backward in loop 2 or later
+	* ending.c: added my name and fixed a typo
+	* player.c: power-up item is O(loop), not O(loop^2)
+	* main.c, star.c: free what is malloc()ed --- I always put away
+	  what I take
+	* main.c: removed unnecessary headers
+	* xsoldier.h: added #include "image.h"
+	* ending.c: you can skip the ending by pressing space key
+	* ending.c: the staff list scrolls at a fixed (independent of loop)
+	  speed
+	* ending.c: added "press space key" message
+	* player.c: change weapon item always makes you a bit powerful
+	* INSTALL: added "required libraries" and fixed a typo
+	* xsoldier.6: fixed typo in synopsis
+	* README: new file, including overview, command line options, key
+	  control and explanation of bonus
+	* LICENSE: added note on the files GPL and old-doc/CONDITION
+
+2002-04-12  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 0.99
+	* putting old documents in old-doc/
+	* translated all comments into English
+	* INSTALL: fixed the FHS way
+	* main.c: fixed -display and -wait option
+	* main.c: improved the error message for bad options
+	* boss.c: the last boss is a bit weaker in loop 2
+	* game.c, main.c, manage.c, xsoldier.h: added -nopausemessage option
+	* boss.c, enemy.c, game.c, player.c, score.c, star.c
+	  s/random()/rand()/g
+	* main.c, xsoldier.h: s/random/rand/g, s/srandom/srand/g
+	* configure.ac: checks rand() instead of random()
+	* xsoldher.h: s/HAVE_RANDOM/HAVE_RAND/
+	* score.c: almost a complete rewrite
+	* GPL: renamed, old name is COPYING
+	* LICENSE: renamed, old name is CONDITION
+	* LICENSE: added my name
+	* boss.c: made boss 4 larger to prevent backstab
+	* boss.c: made boss 8 smaller for better collision-detection
+	* callback.c, game.c: draws a rectangle in the object's "real"
+	  size if debug is enabled
+	* game.c: added do_actions() and collision_detection()
+	* enemy.c: enemy 7 escapes from the upper side of the window
+	  (now weapon 2 is not the only way to get the perfect bonus)
+	* game.c: improved shoot down bonus (shoot down bonus should be large
+	  enough so that missing a boss is a big loss, but small enough not
+	  to trivialize non-shooting bonus)
+	* game.c: added shoot_down_bonus() and perfect_bonus()
+	* enemyshot.c: made homing missiles more stupid
+	* boss.c: boss 7 does escape from the window if the time is over
+	* manage.c: always starts a loop with a fixed level (that is, 10)
+	* game.c: normal enemies appear less frequently
+	* enemy.c: normal eneimes have a fixed hit point (independent of loop)
+	* main.c: set max length of player name
+	* manage.c: added paranoid checks to NewPlayerData()
+
+2002-04-02  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 0.98
+	* uses Makefile.am instead of Imakefile
+	* put all *.c , *.h and the manpage under RCS
+	* boss.c, callback.c, ending.c, enemy.c, game.c, joystick.c,
+	  manage.c, opening.c, player.c: hacked to avoid gcc -Wall warnings
+	  - added many #include
+	  - removed Japanese comments which are encoded to /*
+	  - removed unused variables
+	* callback.c, ending.c, game.c, image.c, joystick.c, joystick.h,
+	  manage.c, manage.h, opening.c, score.c, sin.c, star.c, star.h:
+	  hacked to avoid gcc overkill warnings (see Makefile.am)
+	  - added many #include
+	  - declared some arguments and variables as const
+	  - converted switch statement to if-else because KeySym may
+	    not be int
+	  - avoid the name of a global variable in prototypes
+	  - removed unused arguments from printf
+	* xsoldier.h: now defines WAIT, PIXMAP, SCORE and SCOREFILE
+	* manage.h: added declaration of ClearEnemyShotManage()
+	* player.c: initializes notShootingTime correctly (this fixes
+	  a bug which didn't give you the non-shooting bonus unless
+	  you shot at least once)
+	* xsoldier.6: renamed, old name is "xsoldier.man"
+	* fix/: dropped because it is not used
+	* version.h: now VERSION is defined in config.h
+	* main.c, xsoldier.6: added -maxlevel option
+	* game.c: removed high score display because you don't need it
+	  during the game
+	* main.c: checks invalid options
+	* boss.c, ending.c, game.c, image.c, main.c, opening.c, player.c,
+	  score.c: now includes config.h
+	* main.c: removed zero padding from the output of -score
+	* xsoldier.h: replaced SYSV with HAVE_RANDOM because it only
+	  affects random()
+	* INSTALL: added
+	* image.c: fixed SplitImage debug message
+	* main.c, manage.c, xsoldier.h: added -loop, -state, -maxpower and
+	  -ship options (all for debug only)
+	* game.c, manage.c, xsoldier.h: never show shoot down bonus
+	  at the beginning of the game
+	* ending.c: fixed a typo in the ending message
+	* ending.c: the staff list scrolls slow in the loop 3 or later
+	* image.c: fixed "isn't just" debug message
+	* enemy.c: enemy 6 does disappear
+
+2002-03-15  Oohara Yuuma  <oohara@libra.interq.or.jp>
+
+	* version 0.97
+	* based on the Debian package (version 1:0.96-14)
+	* bug fixes:
+	  - boss.c: fixed the size of boss 1 and 4 (you can't backstab them)
+	  - boss.c: enables the hitmask when boss 6 reappears
+	  - enemyshot.c: added return NoneDel; at the end of EnemyLaserAct()
+	    (without this the function sometimes ends without calling
+	    return, resulting a suicide of the boss of the stage 4)
+	  - game.c: when handling Hit(), call the enemy's Hit first
+	    (necessary because Hit() of the weapon 3 changes its Attack
+	    and the damage is calculated in Hit() of the enemy)
+	  - joystick.c: applied Right and Down fix (fix available at the
+	    original author's webpage:
+	    http://www.surfline.ne.jp/hachi/xsoldier.html)
+	  - main.c: set the maximum number of player's object to 256
+	    (64 seems to be insufficient for the weapon 2)
+	  - main.c: modified sig_handle() because sigaction() expects
+	    void f(int), not static void f(void)
+	  - opening.c: made sure stars moves at the normal speed
+	* game balance tweaks:
+	  - ending.c: staff list scrolls faster
+	  - game.c: adjusted the interval between enemy's appearances
+	  - game.c, opening.c: disabled zero padding of scores
+	  - manage.c: max level (internal parameter) is now MaxLevel
+	    (which is currently 80), not 85
+	  - player.c, player.h: made the player's weapons much more powerful
+	  - player.c: speed change is now 3 points/key-type instead of 5
+	  - player.c: your weapon does not power down even if you are killed
+	  - xsoldier.h: extend every 200,000 points instead of 100,000
+	* new features:
+	  - boss.c, enemy.c: act routine improved a lot
+	  - boss.c, game.c, manage.c, xsoldier.h: a boss escapes if
+	    the time is up (in this case you don't get the shoot down bonus)
+	  - callback.c, enemy.c: dealing damage to a enemy gives you a score
+	    even if you don't destroy it
+	  - callback.c, enemy.c, game.c, manage.c: shows the remaining hit
+	    points of a enemy when you shoot it
+	  - game.c: shoot down bonus is bigger in second or later loop
+	  - game.c: perfect bonus raises the level
+	  - game.c: added c (clear enemy shot) key (enabled only when
+	    compiled with -DDEBUG)
+	  - game.c, manage.c: cleans enemy's shots when you restart
+	  - main.c: set max loop to 3 (24 stages total)
+	  - manage.c, player.c: gives you a score as long as you don't push
+	    the shot key
+	  - opening.c: added short help for debug-only commands
+	  - player.c: power up item gives you a score and raises the level
+	    if you already have enough power up items
+	  - player.c: the level will be lowered if you are killed
+	* game.c: set the score limit to 10,000,000
+	* manage.c: added paranoid initialization of objects
+	* score.c: s/strcpy()/strncpy()/g

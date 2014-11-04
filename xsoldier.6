@@ -1,0 +1,61 @@
+.\" $Id: xsoldier.6,v 1.4 2002/05/05 11:13:08 oohara Exp $
+.TH XSOLDIER 6 "Sat,  6 Apr 2002"
+.SH NAME
+xsoldier \- a space-based shoot'em up game
+.SH SYNOPSIS
+.B xsoldier
+.RB [ "\-dwcsh" ]
+.RB [ "\-display" name]
+.RB [ "\-wait" number]
+.RB [ "\-cmap" ]
+.RB [ "\-score" ]
+.RB [ "\-help" ]
+.RB [ "\-maxlevel" ]
+.SH DESCRIPTION
+This manual page was written for the Debian GNU/Linux distribution
+because the original program does not have a manual page.
+.PP
+.B xsoldier
+is a space-based shoot'em up game. You fly around and try to kill everything
+that moves... and everything that doesn't move... You get the idea.
+.SH OPTIONS
+.TP
+.BR "\-d, \-display" " name"
+The (X window) display on which you want to play the game.
+.TP
+.BR "\-w, \-wait" " number"
+Set the speed of the game. A higher number means the game runs slower. If you
+use this option the ranking mode is turned off.
+.TP
+.BR "\-c, \-cmap"
+Do nothing (only for backward compatibility).
+.TP
+.BR "\-s, \-score"
+Show the TOP10 soldiers, i.e. the highscore.
+.TP
+.BR "\-h, \-help"
+Show a short help text and exit.
+.TP
+.BR "\-maxlevel"
+Force max level enemy attack, making your life really harder.
+.TP
+.BR "\-nopausemessage"
+Don't show "Press [p] to resume game." message when the game is paused.
+Useful for capturing a screen snapshot.
+.SH BUGS
+Please report any bugs you find to Yuusuke HASHIMOTO
+<s945750@educ.info.kanagawa-u.ac.jp>
+.SH LICENSE
+.B xsoldier
+is covered by the GNU General Public License (GPL).
+.SH AUTHOR
+Yuusuke HASHIMOTO <s945750@educ.info.kanagawa-u.ac.jp>
+.PP
+This manual page was written by Uwe Hermann <uh1763@hermann-uwe.de>,
+for the Debian GNU/Linux system (but may be used by others).
+Modified by Oohara Yuuma <oohara@libra.interq.or.jp>.
+.SH SEE ALSO
+.BR xbat (6),
+.BR chromium (6),
+.BR powermanga (6),
+.BR xkobo (6).

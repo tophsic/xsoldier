@@ -1,0 +1,182 @@
+README for xsoldier
+$Id: README,v 1.9 2011/08/09 08:12:25 oohara Exp $
+
+* what is xsoldier
+xsoldier is a shoot 'em up game with the "not shooting" bonus.  It is
+2D (that is, hardware acceleration is not necessary if you have a "not bad"
+CPU) game for one player using the X Window System or the Simple DirectMedia
+Layer (SDL) library.
+
+So, why yet another shoot 'em up?  Because xsoldier has a unique feature
+--- the "not shooting" bonus.  You can get a pretty good score by not
+pressing the shoot button.  This is an answer to my motto for a shoot 'em up,
+that is, "why a shoot button?".  After all, if the game is a simple
+kill-everything and shooting is always a good thing, why do I have to
+press a shoot button (or worse, hit the shoot button again and again)?
+You can play xsoldier as a simple kill-everything (and it is the best way
+to survive), but if you care your score, you need to kill all enemies
+with a minimum number of bullets.
+
+* how to install xsoldier
+See the file INSTALL for information about how to install xsoldier.
+In short, install libc, libX11 and libXpm, then type
+1) ./configure
+2) make
+3) make install
+If you use SDL instead of X, install libSDL and libSDL_image instead of
+libX11 and libXpm, then use the --with-sdl option of ./configure .
+
+* overview of the game
+In xsoldier, you move a space ship and shoot enemies (they usually appear
+from the upper side of the window, but some appear from the _lower_ side).
+If you kill the boss enemy which appears at the end of each stage, or if
+you can survive till the boss enemy gets bored with you and escapes, you
+can go to the next stage.
+
+xsoldier has 8 stages.  You need to clear each stage 3 times to clear the
+entire game (24 stages total).  A set of the 8 stages is called a "loop".
+If you cleared the first loop (that is, the first 8 stages), the second
+loop will begin after the ending (a staff scroll), with more difficulty
+(enemies shoot more, enemy shots move faster and so on).  Similarly,
+the third loop will begin after the second loop (and the second ending).
+The third loop is very dangerous because enemies will _always_ leave a shot
+when they die.
+
+* command line options
+
+** (-d | -display) NAME
+Specify the (X window) display on which you want to play the game.
+
+** (-w | -wait) NUMBER
+Set the speed of the game.  A higher number means the game runs slower.
+NUMBER must be a positive integer.  If you use this option and if NUMBER
+is greater than the default (use -h to see it), the ranking mode is
+turned off.
+
+** (-c | -cmap)
+This option has no effect (only for backward compatibility).
+
+** (-s | -score)
+Show the top 10 soldiers, that is, the high score list.
+
+** (-h | -help)
+Show a short help text and exit.
+
+** -maxlevel
+Force max level enemy attack, making your life really harder.
+
+** -nopausemessage
+Don't show "Press [p] to resume game." message when the game is paused.
+This is useful for capturing a screen snapshot.
+
+
+If you compiled xsoldier with debugging features, the follwing options
+are also available.  They disable the ranking mode.
+
+** -stage L-S
+Start the game with the stage S of the loop L.  S must be a positive
+integer between 1 and 8, and L must be a positive integer between
+1 and 3.
+
+** -stage S
+Start the game with the stage S.  S must be a positive integer between
+1 and 8,
+
+** -loop L
+Start the game with the loop L.  L must be a positive integer between
+1 and 3.
+
+** -ship N
+Start the game with N ships.  N must be a integer between 0 and 99.
+
+** -maxpower
+Make sure that you always have a maximum power weapon.
+
+* key control
+cursor keys        move
+left shift         shoot (auto-repeat)
+a                  speed up
+s                  speed down
+p                  pause/resume
+q                  quit the game
+space              start the game (in the title/ending)
+
+You can use a joystick too if xsoldier is compiled with joystick support
+(see INSTALL).  Note that joystick support is no longer maintained.
+Probably it won't work on a system other than Linux.
+
+If you compiled xsoldier with debug features, some keys are also available
+for cheating:
+w                  change weapon
+c                  clear enemy shots
+
+* power-up items
+Some enemies sometimes leave a power-up item when they die (others never do).
+There are 2 kinds of items.  The one which says "Pow" makes your shots more
+powerful.  The other one (which changes its appearance periodically) changes
+your weapon and makes your shots a bit more powerful.
+
+There are 3 kinds of weapons you can use --- blue, yellow and gray.
+The blue shot is fast, damages fairly well and you can shoot it
+backward if you correct enough power-up items.  The yellow shot shoots
+many, many bullets, so you don't need to aim very carefully.  However,
+each bullet deals only a little damage.  The gray shot is slow and
+you can shoot it only forward, but it damages very well (even boss enemies
+will die in a few seconds).
+
+If you already have enough power-up items and gets another one, it will
+give you bonus points.  If you die, you may lose some of power-up items.
+
+* "not shooting" bonus
+You get a bonus automatically as long as you don't press the shoot key
+(to be precise, if it is at least 5 frames after you released the shoot key).
+This bonus is called "not shooting" bonus.  The more enemy there are in
+the window, the more points you get.  Enemy shots, power-up items and
+explosions also count as enemies for the "not shooting" bonus.
+
+* shoot down bonus
+When you clear a stage by destroying the boss enemy, you get a bonus
+according to the percentage of enemies you destroyed in this stage.
+95% destroy bonus is 1/2 of 100% destroy bonus, 90% destroy bonus is
+1/3 of of 100% destroy bonus and so on.  The shoot down bonus is larger
+in later stages.
+
+* game tips
+Your ship is smaller than it looks.  In other words, your ship will not be
+destroyed even if enemy shots touch it a bit.
+
+The yellow shot is the best way to survive.  Keep pressing the shoot key
+unless you are an expert.  Problems are that your score will be poor and
+that the yellow shot is not good at killing the boss enemies.
+
+Play with the boss enemies for a while to get the "not shooting" bonus.
+stage   estimated bonus    difficulty
+  1       small              easy
+  2       small              very easy (loop 1), hard (loop 2 or later)
+  3       small              hard
+  4       medium             normal (loop 1 or 2), hard (loop 3)
+  5       very big           easy (loop 1), normal (loop 2 or later)
+  6       big                hard
+  7       small              hard
+  8       very big           very hard
+Make sure that you destroy the boss enemies before they escape.  Don't
+miss the shoot down bonus.
+
+* feedback
+Send comments or bug reports to Oohara Yuuma <oohara@libra.interq.or.jp>.
+Also check the xsoldier webpage:
+http://www.interq.or.jp/libra/oohara/xsoldier/index.html
+
+* license
+See the file LICENSE for information about the license.  In short,
+the license is GPL version 2 or later.
+
+* history
+The original author of xsoldier was Yuusuke HASHIMOTO <hachi@pm.highway.ne.jp>.
+He maintained xsoldier until version 0.96.  It was a simple but decent
+shoot 'em up.  The original xsoldier webpage was
+http://www.surfline.ne.jp/hachi/xsoldier.html .
+
+Oohara Yuuma <oohara@libra.interq.or.jp> took over the development of
+xsoldier and added the "not shooting" bonus.  The game bacame easy if
+you are interested in just surviving.

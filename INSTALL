@@ -1,0 +1,82 @@
+how to install xsoldier
+$Id: INSTALL,v 1.11 2002/12/20 13:53:09 oohara Exp $
+
+* required libraries
+1) a C library with POSIX support and BSD extension (libc)
+   (GNU C Library is known to work)
+By default, xsolider uses X libraries:
+2) Xlib (libX11)
+3) the X pixmap library (libXpm)
+If you compile xsoldier with the --with-sdl option of ./configure,
+xsoldier ues SDL libraries instead of 2) and 3):
+4) the Simple DirectMedia Layer library (libSDL)
+5) SDL_image (libSDL_image)
+
+* installation commands
+
+xsoldier follows the standard 3-step installation process, that is:
+1) ./configure
+2) make
+3) make install
+
+* ./configure options
+
+** install directories
+
+--prefix
+Everything will be installed here by default.
+
+--bindir
+The binary of xsoldier will be installed here.
+
+--localstatedir
+The score file will be installed in its subdirectory games/xsoldier/ .
+
+--datadir
+The pixmaps will be installed in its subdirectory games/xsoldier/ .
+
+--mandir=/usr/share/man
+The manpage will be installed in its subdirectory man6/ .
+
+
+The FHS way will be something like:
+./configure --prefix=/usr --bindir=/usr/games \
+  --localstatedir=/var --mandir=/usr/share/man
+
+If you have no root privilege and want to install xsoldier under
+your home directory, try:
+./configure --prefix=/home/oohara/temp/xsoldier
+Replace /home/oohara/temp/xsoldier as appropriate.  Note that
+these directories must be specified in their absolute path.
+
+** --enable
+
+--enable-joystick
+Use a joystick to move the player's ship.  You can use a keyboard too.
+There are some warnings:
+1) Joystick support is no longer maintained.
+2) If you enable this feature, you _must_ have /dev/js0 or /dev/js1
+   to play the game.
+
+--enable-debug
+Enable additional debugging features such as special key controls
+for cheating, command line options to set some parameters and
+lots of outputs to stderr.  This is not for a serious gamer because
+it allows you to clean all enemy shots at any time.
+
+--enable-duplicated-scores
+Allow duplicated score entries in the high score list.  In other words,
+if you enable this feature, the same person can enter the list twice
+or more at the same time.
+
+* the high score file
+
+The high score file, games/xsoldier/xsoldier.scores in the
+localstatedir, must be writable by the xsoldier binary.
+The recommended way to do this is to create a dedicated system group
+(usually called as "games"), install the high score file as 664
+root:games and have the xsoldier binary sgid games.
+
+If there is already a file at the destination of the high score file,
+"make install" does not overwrite it.  "make uninstall" always removes
+the high score file.
