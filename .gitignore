@@ -1,0 +1,6 @@
+*.o
+/.deps
+/Makefile
+/stamp-h1
+/config.*
+/xsoldier
