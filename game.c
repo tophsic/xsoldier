@@ -110,10 +110,10 @@ int mainLoop(void)
 	{
           if (manage->flag_nopausemessage == False)
           {
-            draw_string(235, 280, "Pause", strlen("Pause"));
-            draw_string(180, 300, "Press [", strlen("Press ["));
-            draw_string(230, 300, pauseKey, strlen(pauseKey));
-            draw_string(245, 300, "] to resume game",
+            draw_relative_string(235, 280, "Pause", strlen("Pause"));
+            draw_relative_string(180, 300, "Press [", strlen("Press ["));
+            draw_relative_string(230, 300, pauseKey, strlen(pauseKey));
+            draw_relative_string(245, 300, "] to resume game",
                         strlen("] to resume game"));
           }
           redraw_window();
@@ -255,14 +255,14 @@ int mainLoop(void)
 	if (oneUp != 0)
 	{
 	    if (oneUp%4 > 1)
-              draw_string(440, 620, "1UP", strlen("1UP"));
+              draw_relative_string(440, 620, "1UP", strlen("1UP"));
 	    oneUp++;
 	    if (oneUp > 50)
 		oneUp = 0;
 	}
 
 	if (manage->player[0]->Data.kill==True && player->Ships==0)
-          draw_string(230, 300, "Game Over", strlen("Game Over"));
+          draw_relative_string(230, 300, "Game Over", strlen("Game Over"));
 
 	if (manage->Appear < 0)
 	{
@@ -276,28 +276,28 @@ int mainLoop(void)
               if (manage->BossTime >= 1)
               {
 		sprintf(Percent,"shoot down %02d%%",player->Percent);
-                draw_string(210, 370, Percent, strlen(Percent));
+                draw_relative_string(210, 370, Percent, strlen(Percent));
 
 
 		sprintf(Bonus,"Bonus %d pts", shoot_down_bonus(player->Percent, manage->Loop, manage->Stage));
-                draw_string(260 + manage->Appear*3 , 400,
+                draw_relative_string(260 + manage->Appear*3 , 400,
                             Bonus, strlen(Bonus));
 
 		if (player->Percent >= 100)
 		{
 		    sprintf(Perfect,"Perfect!!");
-                    draw_string(170 - manage->Appear*3 , 420,
+                    draw_relative_string(170 - manage->Appear*3 , 420,
                                 Perfect, strlen(Perfect));
 		}
               }
               else
               {
                 snprintf(Percent, 32, "the boss escaped");
-                draw_string(200 ,370 ,Percent, strlen(Percent));
+                draw_relative_string(200 ,370 ,Percent, strlen(Percent));
               }
               
 	    }
-            draw_string(230, 320, StageName[manage->Stage-1],
+            draw_relative_string(230, 320, StageName[manage->Stage-1],
                         strlen(StageName[manage->Stage-1]));
 	}
 	if (manage->Appear == 0)
@@ -350,19 +350,19 @@ static void DrawInfo(void)
     sprintf(EnemyKill,"EnemyKill %3d",manage->StageShotDown);
 #endif
 
-    draw_string(10, 20, Score, strlen(Score));
-    draw_string(430, 20, Stage, strlen(Stage));
-    draw_string(430, 640, Ships, strlen(Ships));
+    draw_absolute_string(10, 20, Score, strlen(Score));
+    draw_absolute_string(430, 20, Stage, strlen(Stage));
+    draw_absolute_string(430, 640, Ships, strlen(Ships));
 #ifdef DEBUG
-    draw_string(10, 40, ObjectE, strlen(ObjectE));
-    draw_string(10, 60, ObjectP, strlen(ObjectP));
-    draw_string(10, 80, Level, strlen(Level));
-    draw_string(10, 100, Enemy, strlen(Enemy));
-    draw_string(10, 120, EnemyKill, strlen(EnemyKill));
-    draw_string(430, 60, Loop, strlen(Loop));
-    draw_string(430, 580, Weapon, strlen(Weapon));
-    draw_string(430, 600, Pow, strlen(Pow));
-    draw_string(430, 620, Speed, strlen(Speed));
+    draw_absolute_string(10, 40, ObjectE, strlen(ObjectE));
+    draw_absolute_string(10, 60, ObjectP, strlen(ObjectP));
+    draw_absolute_string(10, 80, Level, strlen(Level));
+    draw_absolute_string(10, 100, Enemy, strlen(Enemy));
+    draw_absolute_string(10, 120, EnemyKill, strlen(EnemyKill));
+    draw_absolute_string(430, 60, Loop, strlen(Loop));
+    draw_absolute_string(430, 580, Weapon, strlen(Weapon));
+    draw_absolute_string(430, 600, Pow, strlen(Pow));
+    draw_absolute_string(430, 620, Speed, strlen(Speed));
 #endif
     for (i = 0; i<manage->EnemyMax; i++)
       if (manage->enemy[i]->Data.used == True)
@@ -374,14 +374,14 @@ static void DrawInfo(void)
           if (manage->enemy[i]->Data.showDamegeTime >0)
           {
             snprintf(EnemyHP, 5, "%d",manage->enemy[i]->Data.HP);
-            draw_string(manage->enemy[i]->Data.X, manage->enemy[i]->Data.Y,
+            draw_relative_string(manage->enemy[i]->Data.X, manage->enemy[i]->Data.Y,
                         EnemyHP, strlen(EnemyHP));
             (manage->enemy[i]->Data.showDamegeTime)--;
           }
     if (manage->BossApp == True)
     {
       snprintf(BossTime, 16, "Time %4d",manage->BossTime);
-      draw_string(430, 40, BossTime, strlen(BossTime));
+      draw_absolute_string(430, 40, BossTime, strlen(BossTime));
     }
 
 #ifdef DEBUG

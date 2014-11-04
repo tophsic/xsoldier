@@ -75,6 +75,7 @@ EXTERN CharManage *manage;
 EXTERN PlayerData *player;
 
 /* field */
+EXTERN int DefaultFieldW;
 EXTERN int FieldW;
 EXTERN int FieldH;
 

@@ -68,16 +68,16 @@ int Opening(void)
 	DrawStar(StarPtn1);
 	DrawStar(StarPtn2);
 
-	PutImage(Title[0],50,50);
-	draw_string(410, 210, "Ver. " VERSION, strlen("Ver. " VERSION));
-	draw_string(410, 225, UPDATE, strlen(UPDATE));
+	PutImage(Title[0],(int) (FieldW / 2 ) - ((DefaultFieldW / 2) - 50),50);
+	draw_absolute_string(410, 210, "Ver. " VERSION, strlen("Ver. " VERSION));
+	draw_absolute_string(410, 225, UPDATE, strlen(UPDATE));
 
 	if (count%30 < 15)
 	{
-	    draw_string(170, 630, "Press [SPACE KEY] to start",
+	    draw_relative_string(170, 630, "Press [SPACE KEY] to start",
                         strlen("Press [SPACE KEY] to start"));
 #ifdef JSTK
-	    draw_string(155, 610, "Press [Joystick BUTTON] to start",
+	    draw_relative_string(155, 610, "Press [Joystick BUTTON] to start",
                         strlen("Press [Joystick BUTTON] to start"));
 #endif
 	}
@@ -86,61 +86,61 @@ int Opening(void)
 	{
 	    char buff[64];
 	    int i;
-	    draw_string(210, 270, "Top 10 Soldiers",
+	    draw_relative_string(210, 270, "Top 10 Soldiers",
                         strlen("Top 10 Soldiers"));
-	    draw_string(120, 320, "Name", strlen("Name"));
-	    draw_string(270, 320, "Stage", strlen("Stage"));
-            draw_string(350, 320, "Score", strlen("Score"));
+	    draw_relative_string(120, 320, "Name", strlen("Name"));
+	    draw_relative_string(270, 320, "Stage", strlen("Stage"));
+            draw_relative_string(350, 320, "Score", strlen("Score"));
 	    for (i=1; i<=10; i++)
 	    {
-		draw_string(120, 330+i*25, player->Rec[i].name,
+		draw_relative_string(120, 330+i*25, player->Rec[i].name,
                             strlen(player->Rec[i].name));
 		sprintf(buff,"%2d-%2d",player->Rec[i].loop,
                         player->Rec[i].stage);
-		draw_string(270, 330+i*25, buff, strlen(buff));
+		draw_relative_string(270, 330+i*25, buff, strlen(buff));
 		sprintf(buff,"%8d",player->Rec[i].score);
-		draw_string(350, 330+i*25, buff, strlen(buff));
+		draw_relative_string(350, 330+i*25, buff, strlen(buff));
 	    }
 	}
 	else
 	{
-	    draw_string(220, 270, "How To Play", strlen("How To Play"));
-	    draw_string(180, 330, "Up", strlen("Up"));
-	    draw_string(260, 330, " .... ", strlen(" .... "));
-	    draw_string(300, 330, upKey, strlen(upKey));
-            draw_string(180, 355, "Down", strlen("Down"));
-	    draw_string(260, 355, " .... ", strlen(" .... "));
-	    draw_string(300, 355, downKey, strlen(downKey));
-	    draw_string(180, 380, "Left", strlen("Left"));
-	    draw_string(260, 380, " .... ", strlen(" .... "));
-	    draw_string(300, 380, leftKey, strlen(leftKey));
-            draw_string(180, 405, "Right",strlen("Right"));
-	    draw_string(260, 405, " .... ", strlen(" .... "));
-	    draw_string(300, 405, rightKey, strlen(rightKey));
-	    draw_string(180, 430, "Shot", strlen("Shot"));
-	    draw_string(260, 430, " .... ", strlen(" .... "));
-	    draw_string(300, 430, shotKey, strlen(shotKey));
-	    draw_string(180, 455, "Speed up", strlen("Speed up"));
-	    draw_string(260, 455, " .... ",strlen(" .... "));
-	    draw_string(300, 455, spdupKey, strlen(spdupKey));
-	    draw_string(180, 480, "Speed down", strlen("Speed down"));
-	    draw_string(260, 480, " .... ", strlen(" .... "));
-	    draw_string(300, 480, spdwnKey, strlen(spdwnKey));
-	    draw_string(180, 505, "Pause", strlen("Pause"));
-	    draw_string(260, 505, " .... ", strlen(" .... "));
-	    draw_string(300, 505, pauseKey, strlen(pauseKey));
-	    draw_string(180, 530, "Quit", strlen("Quit"));
-	    draw_string(260, 530, " .... ", strlen(" .... "));
-	    draw_string(300, 530, quitKey, strlen(quitKey));
+	    draw_relative_string(220, 270, "How To Play", strlen("How To Play"));
+	    draw_relative_string(180, 330, "Up", strlen("Up"));
+	    draw_relative_string(260, 330, " .... ", strlen(" .... "));
+	    draw_relative_string(300, 330, upKey, strlen(upKey));
+            draw_relative_string(180, 355, "Down", strlen("Down"));
+	    draw_relative_string(260, 355, " .... ", strlen(" .... "));
+	    draw_relative_string(300, 355, downKey, strlen(downKey));
+	    draw_relative_string(180, 380, "Left", strlen("Left"));
+	    draw_relative_string(260, 380, " .... ", strlen(" .... "));
+	    draw_relative_string(300, 380, leftKey, strlen(leftKey));
+            draw_relative_string(180, 405, "Right",strlen("Right"));
+	    draw_relative_string(260, 405, " .... ", strlen(" .... "));
+	    draw_relative_string(300, 405, rightKey, strlen(rightKey));
+	    draw_relative_string(180, 430, "Shot", strlen("Shot"));
+	    draw_relative_string(260, 430, " .... ", strlen(" .... "));
+	    draw_relative_string(300, 430, shotKey, strlen(shotKey));
+	    draw_relative_string(180, 455, "Speed up", strlen("Speed up"));
+	    draw_relative_string(260, 455, " .... ",strlen(" .... "));
+	    draw_relative_string(300, 455, spdupKey, strlen(spdupKey));
+	    draw_relative_string(180, 480, "Speed down", strlen("Speed down"));
+	    draw_relative_string(260, 480, " .... ", strlen(" .... "));
+	    draw_relative_string(300, 480, spdwnKey, strlen(spdwnKey));
+	    draw_relative_string(180, 505, "Pause", strlen("Pause"));
+	    draw_relative_string(260, 505, " .... ", strlen(" .... "));
+	    draw_relative_string(300, 505, pauseKey, strlen(pauseKey));
+	    draw_relative_string(180, 530, "Quit", strlen("Quit"));
+	    draw_relative_string(260, 530, " .... ", strlen(" .... "));
+	    draw_relative_string(300, 530, quitKey, strlen(quitKey));
 #ifdef DEBUG
-	    draw_string(220, 560, "Debug-only Commands",
+	    draw_relative_string(220, 560, "Debug-only Commands",
                         strlen("Debug-only Commands"));
-	    draw_string(180, 575, "Change Weapon", strlen("Change Weapon"));
-	    draw_string(300, 575, weaponchangeKey,
+	    draw_relative_string(180, 575, "Change Weapon", strlen("Change Weapon"));
+	    draw_relative_string(300, 575, weaponchangeKey,
                         strlen(weaponchangeKey));
-	    draw_string(180, 590, "Clear Enemy Shots",
+	    draw_relative_string(180, 590, "Clear Enemy Shots",
                         strlen("Clear Enemy Shots"));
-	    draw_string(300, 590, clearenemyshotKey,
+	    draw_relative_string(300, 590, clearenemyshotKey,
                         strlen(clearenemyshotKey));
 #endif
 	}

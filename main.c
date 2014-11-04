@@ -56,6 +56,7 @@ static int putscore = False;
 static int w_time = -1;
 
 static int maxlevel_temp = False;
+static int window_width = 500;
 static int start_stage = 1;
 static int start_loop = 1;
 static int start_ship = 5;
@@ -221,6 +222,29 @@ static void arginit(int argc, char *argv[])
             usage();
         else if (strcmp(argv[i],"-maxlevel")==0)
 	    maxlevel_temp = True;
+        else if ((strcmp(argv[i],"-width")==0))
+        {
+            if (i < argc-1)
+            {
+                if ((sscanf(argv[i+1], "%d", &a) == 1) && (a >= 500))
+                {
+                    window_width = a;
+                    i++;
+                }
+                else
+                {
+                    fprintf(stderr,
+                            "width (arg %d) must be a positive integer and greater than 500\n",
+                            i + 1);
+                    exit(1);
+                }
+            }
+            else
+            {
+                fprintf(stderr, "no width specified for -width (arg %d)\n", i);
+                exit(1);
+            }
+        }
         else if (strcmp(argv[i],"-nopausemessage")==0)
 	    nopausemessage_temp = True;
 #ifdef DEBUG
@@ -366,6 +390,7 @@ static void usage(void)
 
     fprintf(stderr,"\t display <name>   ... name of the X server to play game.\n");
     fprintf(stderr,"\t wait <n>         ... set wait time. (no ranking) <default is %d>\n",WAIT);
+    fprintf(stderr,"\t width <n>        ... set window width <default is %d>\n",window_width);
     fprintf(stderr,"\t score            ... print top 10 soldiers.\n");
     fprintf(stderr,"\t help             ... this message.\n");
     fprintf(stderr,"\t maxlevel         ... force max level enemy attack.\n");
@@ -401,11 +426,12 @@ static void init(void)
     value.it_value.tv_usec = waittime;
     setitimer(ITIMER_REAL, &value, &ovalue);
 
-    FieldW  = 500;
+    DefaultFieldW = 500;
+    FieldW  = window_width;
     FieldH  = 650;
 
     /* you must call graphic_init() first because it calls SDL_Init */
-    graphic_init();
+    graphic_init(FieldW);
     input_init();
 
     srand((unsigned)time(NULL));

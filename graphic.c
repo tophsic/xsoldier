@@ -53,8 +53,13 @@ static Image **Font6Image;
 #ifdef HAVE_LIBSDL
 static int sdl_draw_pixel(int x, int y);
 #endif /* HAVE_LIBSDL */
+static int position_relative_horizontally(int width);
+static int position_absolute_horizontally(int width);
 
-int graphic_init(void)
+static int MidDefaultFieldW;
+static int MidFieldW;
+
+int graphic_init(int width)
 {
 #ifdef HAVE_LIBSDL
   SDL_Rect temp;
@@ -63,7 +68,9 @@ int graphic_init(void)
   XColor whiteTrue;
   XSizeHints sh;
 #endif /* not HAVE_LIBSDL */
-  FieldW  = 500;
+  FieldW  = width;
+  MidDefaultFieldW = (int) DefaultFieldW / 2;
+  MidFieldW = (int) FieldW / 2;
   FieldH  = 650;
 
 #ifdef HAVE_LIBSDL
@@ -329,6 +336,20 @@ int draw_string(int x, int y, const char *string, int length)
   }
   
   return 0;
+}
+
+int draw_absolute_string(int x, int y, const char *string, int length)
+{
+  x = position_absolute_horizontally(x);
+
+  return draw_string(x, y, string, length);
+}
+
+int draw_relative_string(int x, int y, const char *string, int length)
+{
+  x = position_relative_horizontally(x);
+
+  return draw_string(x, y, string, length);
 }
 
 /* return 0 on success, negative value on error */
@@ -738,3 +759,30 @@ static int sdl_draw_pixel(int x, int y)
   return 0;
 }
 #endif /* HAVE_LIBSDL */
+
+int position_relative_horizontally(int width)
+{
+  signed int diff;
+
+  diff = width - MidDefaultFieldW;
+
+  return (int) MidFieldW + diff;
+}
+
+int position_absolute_horizontally(int width)
+{
+  int minus;
+
+  if (width < MidDefaultFieldW) {
+    return width;
+  }
+
+  if (width > DefaultFieldW)
+  {
+    fprintf(stderr, "Position %d is higher than DefaultFieldW\n", width);
+  }
+
+  minus = DefaultFieldW - width;
+
+  return (int) FieldW - minus;
+}
